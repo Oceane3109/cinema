@@ -1,0 +1,79 @@
+.admin-films {
+  min-height: 500px;
+}
+
+.table-responsive {
+  background: white;
+  border-radius: 0.375rem;
+  overflow: hidden;
+}
+
+.table th {
+  border-top: none;
+  font-weight: 600;
+}
+
+.btn-sm {
+  padding: 0.25rem 0.5rem;
+}
+
+/* Upload d'image */
+.image-upload-section {
+  margin-bottom: 1rem;
+}
+
+.image-upload-placeholder {
+  border: 2px dashed #dee2e6;
+  border-radius: 8px;
+  padding: 2rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #f8f9fa;
+}
+
+.image-upload-placeholder:hover {
+  border-color: #0d6efd;
+  background: #e3f2fd;
+}
+
+.image-upload-placeholder i {
+  font-size: 3rem;
+  color: #6c757d;
+  margin-bottom: 1rem;
+}
+
+.image-upload-placeholder p {
+  margin: 0 0 0.5rem 0;
+  font-weight: 500;
+  color: #495057;
+}
+
+.image-upload-placeholder small {
+  color: #6c757d;
+}
+
+.image-preview {
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #f8f9fa;
+}
+
+.preview-image {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.image-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.image-actions .btn {
+  flex: 1;
+}

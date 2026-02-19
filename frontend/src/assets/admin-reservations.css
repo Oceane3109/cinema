@@ -1,0 +1,33 @@
+.admin-reservations {
+  min-height: 500px;
+}
+
+.table-responsive {
+  background: white;
+  border-radius: 0.375rem;
+  overflow: hidden;
+}
+
+.table th {
+  border-top: none;
+  font-weight: 600;
+}
+
+.btn-group-sm .btn {
+  padding: 0.125rem 0.25rem;
+}
+
+.card {
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+}
+
+.card-title {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.badge {
+  font-size: 0.75em;
+}
+
