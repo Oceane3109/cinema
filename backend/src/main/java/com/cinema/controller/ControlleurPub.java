@@ -255,29 +255,32 @@ public class ControlleurPub {
                 String societeNom = rsSocietes.getString("nom");
                 double dejaPayer = rsSocietes.getDouble("deja_payer");
                 
-                // Compter les diffusions manuellement pour éviter les erreurs de requête
-                ResultSet rsAllDiffusions = stmt.executeQuery(
-                    "SELECT dp.prix_unitaire, TO_CHAR(sc.date_heure, 'YYYY-MM-DD') as date_seance " +
-                    "FROM DIFFUSION_PUB dp " +
-                    "LEFT JOIN seances sc ON dp.id_sceance = sc.id " +
-                    "WHERE dp.id_societe = " + societeId
-                );
-                
                 int nbPasses = 0;
                 double montantPasses = 0.0;
                 int nbPresents = 0;
                 double montantPresents = 0.0;
-                
-                while (rsAllDiffusions.next()) {
-                    String dateSeance = rsAllDiffusions.getString("date_seance");
-                    double prix = rsAllDiffusions.getDouble("prix_unitaire");
-                    
-                    if (dateSeance != null && dateSeance.startsWith("2026")) {
-                        nbPresents++;
-                        montantPresents += prix;
-                    } else {
-                        nbPasses++;
-                        montantPasses += prix;
+
+                // Utiliser une requete preparee separee pour ne pas invalider rsSocietes
+                try (PreparedStatement diffStmt = conn.prepareStatement(
+                        "SELECT dp.prix_unitaire, TO_CHAR(sc.date_heure, 'YYYY-MM-DD') as date_seance " +
+                        "FROM DIFFUSION_PUB dp " +
+                        "LEFT JOIN seances sc ON dp.id_sceance = sc.id " +
+                        "WHERE dp.id_societe = ?"
+                )) {
+                    diffStmt.setInt(1, societeId);
+                    try (ResultSet rsAllDiffusions = diffStmt.executeQuery()) {
+                        while (rsAllDiffusions.next()) {
+                            String dateSeance = rsAllDiffusions.getString("date_seance");
+                            double prix = rsAllDiffusions.getDouble("prix_unitaire");
+
+                            if (dateSeance != null && dateSeance.startsWith("2026")) {
+                                nbPresents++;
+                                montantPresents += prix;
+                            } else {
+                                nbPasses++;
+                                montantPasses += prix;
+                            }
+                        }
                     }
                 }
                 

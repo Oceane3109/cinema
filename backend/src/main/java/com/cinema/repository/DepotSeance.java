@@ -42,9 +42,9 @@ public interface DepotSeance extends JpaRepository<Seance, Long> {
     List<Seance> findSeancesDisponiblesPourFilm(@Param("filmId") Long filmId,
                                                @Param("date") LocalDate date);
 
-    @Query("SELECT s FROM Seance s WHERE s.film.id = :filmId AND s.salle.id = :salleId " +
-           "AND DATE(s.dateHeure) = :date AND TIME(s.dateHeure) = :heure " +
-           "AND s.statut = 'ACTIVE'")
+    @Query(value = "SELECT * FROM seances s WHERE s.film_id = :filmId AND s.salle_id = :salleId " +
+           "AND CAST(s.date_heure AS DATE) = :date AND to_char(s.date_heure, 'HH24:MI') = :heure " +
+           "AND s.statut = 'ACTIVE' LIMIT 1", nativeQuery = true)
     Seance findSeanceSpecifique(@Param("filmId") Long filmId,
                                @Param("salleId") Long salleId,
                                @Param("date") LocalDate date,

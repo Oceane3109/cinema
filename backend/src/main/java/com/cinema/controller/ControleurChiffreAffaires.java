@@ -120,7 +120,7 @@ public class ControleurChiffreAffaires {
 
     @GetMapping("/evolution-temporelle")
     public ResponseEntity<List<Map<String, Object>>> getEvolutionTemporelle(
-            @PathVariable Long filmId,
+            @RequestParam(required = false) Long filmId,
             @RequestParam String periode,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateDebut,
             @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dateFin) {
