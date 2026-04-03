@@ -30,7 +30,7 @@ public interface DepotChiffreAffaireFilm extends JpaRepository<ChiffreAffaireFil
     
     void deleteByFilmId(Long filmId);
 
-    @Query("SELECT d FROM Diffusionpub d WHERE d.filmId = :filmId AND EXTRACT(MONTH FROM d.dateHeureDiff) = :mois")
+        @Query(value = "SELECT d.* FROM diffusion_pub d JOIN seances s ON s.id = d.id_sceance WHERE s.film_id = :filmId AND EXTRACT(MONTH FROM d.date_heure_diffusion) = :mois", nativeQuery = true)
     List<Diffusionpub> findByFilmIdAndMois(@Param("filmId") Long filmId, @Param("mois") int mois);
 
     @Query("SELECT SUM(p.montant) FROM Paiement p WHERE p.diffusionId = :diffusionId")

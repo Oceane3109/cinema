@@ -36,7 +36,7 @@ CREATE DATABASE cinema;
 ## Démarrage de l'application
 
 ```bash
-./mvnw spring-boot:run
+mvn spring-boot:run
 ```
 
 L'application sera disponible sur : http://localhost:8080
@@ -146,5 +146,5 @@ POST /api/seances
 ## Tests
 
 ```bash
-./mvnw test
+mvn test
 ```

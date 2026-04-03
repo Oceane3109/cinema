@@ -13,7 +13,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -807,6 +806,9 @@ public class ChiffreAffaireServiceImpl implements ChiffreAffaireService {
     @Override
     public List<ChiffreAffaireDTO> calculerChiffreAffaireParFilmEtSeance(Long filmId, LocalDate mois) {
         List<ChiffreAffaireDTO> result = new ArrayList<>();
+        String filmTitre = depotFilm.findById(filmId)
+            .map(Film::getTitre)
+            .orElse("Film #" + filmId);
 
         // Récupérer les diffusions pour le film et le mois donné
         int month = mois.getMonthValue();
@@ -815,11 +817,14 @@ public class ChiffreAffaireServiceImpl implements ChiffreAffaireService {
         for (Diffusionpub diffusion : diffusions) {
             BigDecimal prixUnitaire = BigDecimal.valueOf(diffusion.getPrixUnitaire());
             BigDecimal totalPaye = depotChiffreAffaireFilm.calculerTotalPayePourDiffusion(diffusion.getId());
+            if (totalPaye == null) {
+                totalPaye = BigDecimal.ZERO;
+            }
             BigDecimal resteAPayer = prixUnitaire.subtract(totalPaye);
 
             ChiffreAffaireDTO dto = new ChiffreAffaireDTO();
             dto.setFilmId(filmId);
-            dto.setFilmTitre(diffusion.getFilm().getTitre());
+            dto.setFilmTitre(filmTitre);
             dto.setDateCalcul(mois);
             dto.setChiffreAffaire(prixUnitaire);
             dto.setDejaPaye(totalPaye);

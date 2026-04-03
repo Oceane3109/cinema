@@ -64,8 +64,14 @@ CREATE TABLE paiement (
     montant DECIMAL(10,2) NOT NULL,
     date_paiement TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     description TEXT,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_diffusion_pub INT,
+    id_paiement_groupe INT
 );
+
+-- Ajustements de compatibilite si les tables existent deja
+ALTER TABLE paiement ADD COLUMN IF NOT EXISTS id_diffusion_pub INT;
+ALTER TABLE paiement ADD COLUMN IF NOT EXISTS id_paiement_groupe INT;
 
 -- 2. VIDAGE COMPLET DES TABLES
 
@@ -85,6 +91,9 @@ DELETE FROM client_tarifs;
 DELETE FROM chiffre_affaire_film;
 DELETE FROM tarifs;
 DELETE FROM genres;
+
+ALTER TABLE reservations ENABLE TRIGGER ALL;
+ALTER TABLE seances ENABLE TRIGGER ALL;
 
 -- 3. REINITIALISATION DES SEQUENCES
 

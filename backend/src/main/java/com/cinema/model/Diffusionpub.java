@@ -20,11 +20,11 @@ public class Diffusionpub {
     private double prix_unitaire;
     private String statut;
 
-    @Column(name = "film_id", nullable = false)
-    private Long filmId;
-
     @Column(name = "date_heure_diffusion", nullable = false)
     private LocalDateTime dateHeureDiff;
+
+    public Diffusionpub() {
+    }
 
     public Diffusionpub(int id, int id_societe, int id_sceance, LocalDateTime date_heure_diff, double prix_unitaire,
             String statut) {
@@ -83,18 +83,5 @@ public class Diffusionpub {
 
     public void setStatut(String statut) {
         this.statut = statut;
-    }
-
-    public Long getFilmId() {
-        return filmId;
-    }
-
-    public void setFilmId(Long filmId) {
-        this.filmId = filmId;
-    }
-
-    public Film getFilm() {
-        // Placeholder implementation; replace with actual logic to retrieve the film
-        return new Film();
     }
 }
